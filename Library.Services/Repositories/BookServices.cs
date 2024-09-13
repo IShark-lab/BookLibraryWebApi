@@ -7,6 +7,7 @@ using Library.DataAccess.Entities;
 using Library.DataAccess.Repositories;
 using Library.Services.Interaces;
 using Library.Services.Models;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Library.Services.Repositories
 {
@@ -112,20 +113,22 @@ namespace Library.Services.Repositories
             await _bookRepository.DeleteAsync(id);
         }
 
-        public Task<IEnumerable<BookDTO>> GetAllOrderByName()
+        public async Task<IEnumerable<BookDTO>> GetAllOrderByTitle()
         {
-            throw new NotImplementedException();
+
+            var bookDtos = await GetAllAsync();
+            bookDtos = bookDtos.OrderBy(x => x.Title);
+            return bookDtos;
         }
 
-        public Task<IEnumerable<BookDTO>> GetAllOrderByReleaseDate()
+        public async Task<IEnumerable<BookDTO>> GetAllOrderByReleaseDate()
         {
-            throw new NotImplementedException();
+            var bookDtos = await GetAllAsync();
+            bookDtos = bookDtos.OrderBy(x => x.ReleasedDate);
+            return bookDtos;
         }
 
-        public Task<IEnumerable<BookDTO>> GetAllOrderByAuthor()
-        {
-            throw new NotImplementedException();
-        }
+       
 
 
 

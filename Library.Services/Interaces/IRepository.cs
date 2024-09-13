@@ -19,9 +19,8 @@ namespace Library.Services.Interaces
 
     public interface IRepositoryBooks<T>
     {
-        Task<IEnumerable<T>> GetAllOrderByName();
+        Task<IEnumerable<T>> GetAllOrderByTitle();
         Task<IEnumerable<T>> GetAllOrderByReleaseDate();
-        Task<IEnumerable<T>> GetAllOrderByAuthor();
         
     }
 

@@ -12,8 +12,6 @@ namespace Library.Presentation.Controllers
     {
         private readonly BookServices _bookServices = new BookServices();
 
-
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookDTO>>> GetBooks()
         {
@@ -47,7 +45,7 @@ namespace Library.Presentation.Controllers
             if (result.IsSuccess)
                 return NoContent();
 
-            return NotFound();  
+            return NotFound();
         }
 
 
@@ -58,6 +56,22 @@ namespace Library.Presentation.Controllers
             await _bookServices.DeleteAsync(id);
             return NoContent();
         }
+
+        [HttpGet("orderByTitle")]
+        public async Task<ActionResult<IEnumerable<BookDTO>>> OrderByTitle()
+        {
+            var books = await _bookServices.GetAllOrderByTitle();
+            return Ok(books);
+        }
+
+        [HttpGet("orderByReleaseDate")]
+        public async Task<ActionResult<IEnumerable<BookDTO>>> OrderByReleaseDate()
+        {
+            var books = await _bookServices.GetAllOrderByReleaseDate();
+            return Ok(books);
+        }
+
+
 
     }
 }
