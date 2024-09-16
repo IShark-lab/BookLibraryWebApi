@@ -6,14 +6,19 @@ using System.Threading.Tasks;
 using Library.DataAccess.Entities;
 using Library.DataAccess.Repositories;
 using Library.Services.Interaces;
-using Library.Services.Models;
-using static System.Reflection.Metadata.BlobBuilder;
+using Library.Domain.Models;
+using Library.DataAccess.Interfaces;
 
 namespace Library.Services.Repositories
 {
-    public class BookServices : IRepository<BookDTO>, IRepositoryBooks<BookDTO>
+    public class BookServices : IServiceBook
     {
-        private readonly BookRepository _bookRepository = new BookRepository();
+        private readonly IRepositoryBook _bookRepository;
+
+        public BookServices(IRepositoryBook bookRepository) 
+        { 
+            this._bookRepository = bookRepository;
+        }
 
         public async Task<IEnumerable<BookDTO>> GetAllAsync()
         {

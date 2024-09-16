@@ -7,14 +7,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.DataAccess.Repositories
 {
-    public class BookRepository : IRepository<Book>
+    public class BookRepository : IRepositoryBook
     {
-        private BookContext _bookContext = new BookContext();   
+        private readonly BookContext _bookContext;   
 
-        //public BookRepository(BookContext bookContext)
-        //{
-        //    this._bookContext = bookContext;
-        //}
+        public BookRepository(BookContext bookContext)
+        {
+            this._bookContext = bookContext;
+        }
 
         public async Task<IEnumerable<Book>> GetAllAsync()
         {

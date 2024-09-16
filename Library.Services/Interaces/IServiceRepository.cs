@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Library.Services.Repositories;
+using Library.Domain.Models;
 
 namespace Library.Services.Interaces
 {
-    public interface IRepository<T>
+    public interface IServiceRepository<T>
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetAsync(int id);
@@ -17,11 +18,12 @@ namespace Library.Services.Interaces
         Task DeleteAsync(int id);
     }
 
-    public interface IRepositoryBooks<T>
+    public interface IServiceOrder<T>
     {
         Task<IEnumerable<T>> GetAllOrderByTitle();
         Task<IEnumerable<T>> GetAllOrderByReleaseDate();
         
     }
+    public interface IServiceBook : IServiceRepository<BookDTO>, IServiceOrder<BookDTO> { }
 
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Services.Models
+namespace Library.Domain.Models
 {
     public class BookDTO
     {

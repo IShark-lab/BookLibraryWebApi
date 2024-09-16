@@ -1,7 +1,9 @@
-﻿using Library.Services.Models;
+﻿using Library.Domain.Models;
 using Library.Services.Repositories;
+using Library.Services.Interaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 
 
 namespace Library.Presentation.Controllers
@@ -10,7 +12,13 @@ namespace Library.Presentation.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly BookServices _bookServices = new BookServices();
+        private readonly IServiceBook _bookServices;
+
+        public BooksController(IServiceBook bookServices)
+        {
+            this._bookServices = bookServices;
+        }
+
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookDTO>>> GetBooks()
