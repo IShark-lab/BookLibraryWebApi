@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Services", "Library
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Presentation", "Library.Presentation\Library.Presentation.csproj", "{3285344A-4744-49C7-BA82-D64795C1EF1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Domain", "NLayerApp.DAL\Library.Domain\Library.Domain.csproj", "{7866DDC9-5EB4-4C4B-BE38-9FC4DE5FDBC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Domain", "Library.Domain\Library.Domain.csproj", "{BDE5F2F3-3156-458F-AAFA-F5B9B2A85C87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{3285344A-4744-49C7-BA82-D64795C1EF1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3285344A-4744-49C7-BA82-D64795C1EF1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3285344A-4744-49C7-BA82-D64795C1EF1D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7866DDC9-5EB4-4C4B-BE38-9FC4DE5FDBC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7866DDC9-5EB4-4C4B-BE38-9FC4DE5FDBC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7866DDC9-5EB4-4C4B-BE38-9FC4DE5FDBC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7866DDC9-5EB4-4C4B-BE38-9FC4DE5FDBC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDE5F2F3-3156-458F-AAFA-F5B9B2A85C87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDE5F2F3-3156-458F-AAFA-F5B9B2A85C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDE5F2F3-3156-458F-AAFA-F5B9B2A85C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDE5F2F3-3156-458F-AAFA-F5B9B2A85C87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
