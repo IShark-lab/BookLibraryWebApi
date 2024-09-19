@@ -4,6 +4,10 @@ using Library.DataAccess.EF;
 using Library.DataAccess.Repositories;
 using Library.Services.Interaces;
 using Library.DataAccess.Interfaces;
+using Library.Domain.Models;
+using Library.DataAccess.Entities;
+using Library.Services.Mapper;
+using Library.Services.Services;
 
 
 namespace Library.Presentation
@@ -21,10 +25,19 @@ namespace Library.Presentation
 
             var connectionString = builder.Configuration.GetConnectionString("Library");
 
-            builder.Services.AddDbContext<BookContext>(options => options.UseSqlServer(connectionString));
+            builder.Services.AddDbContext<LibraryContext>(options => options.UseSqlServer(connectionString));
 
             builder.Services.AddScoped<IRepositoryBook, BookRepository>();
+            builder.Services.AddScoped<IRepositoryAuthor, AuthorRepository>();
+
             builder.Services.AddScoped<IServiceBook, BookServices>();
+            builder.Services.AddScoped<IServiceAuthor, AuthorServices>();
+
+
+            builder.Services.AddScoped<IMapper<BookDto, Book>, BookMapper>();
+            builder.Services.AddScoped<IMapper<AuthorDto, Author>, AuthorMapper>();
+            
+
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

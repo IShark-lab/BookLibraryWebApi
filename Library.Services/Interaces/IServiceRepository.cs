@@ -9,7 +9,7 @@ using Library.Domain.Models;
 
 namespace Library.Services.Interaces
 {
-    public interface IServiceRepository<T>
+    public interface IServiceRepository<T> where T : class
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetAsync(int id);
@@ -24,6 +24,10 @@ namespace Library.Services.Interaces
         Task<IEnumerable<T>> GetAllOrderByReleaseDate();
         
     }
-    public interface IServiceBook : IServiceRepository<BookDTO>, IServiceOrder<BookDTO> { }
+    public interface IServiceBook : IServiceRepository<BookDto>, IServiceOrder<BookDto> { }
+    public interface IServiceAuthor : IServiceRepository<AuthorDto> 
+    {
+        Task<AuthorDto> GetAuthorByBookAsync(int bookId);
+    }
 
 }

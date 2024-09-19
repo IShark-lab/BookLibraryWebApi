@@ -1,6 +1,6 @@
 ﻿using Library.Domain.Models;
-using Library.Services.Repositories;
 using Library.Services.Interaces;
+using Library.Services.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,44 +12,48 @@ namespace Library.Presentation.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly IServiceBook _bookServices;
+        private readonly IServiceBook _bookService;
 
         public BooksController(IServiceBook bookServices)
         {
-            this._bookServices = bookServices;
+            this._bookService = bookServices;
         }
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BookDTO>>> GetBooks()
+        public async Task<ActionResult<IEnumerable<BookDto>>> GetBooks()
         {
-            var book = await _bookServices.GetAllAsync();
+            var book = await _bookService.GetAllAsync();
             if (book is null)
                 return NotFound();
 
             return Ok(book);
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<BookDTO>> GetBook(int id)
+        public async Task<ActionResult<BookDto>> GetBook(int id)
         {
-            var book = await _bookServices.GetAsync(id);
+            var book = await _bookService.GetAsync(id);
             if (book is null) return NotFound();
             return Ok(book);
         }
         [HttpPost]
-        public async Task<ActionResult<BookDTO>> PostBook(BookDTO book)
+        public async Task<ActionResult<BookDto>> PostBook(BookDto book)
         {
-            var result = await _bookServices.CreateAsync(book);
+            
+            var result = await _bookService.CreateAsync(book);
+
             if (result.IsSuccess)
-                return CreatedAtAction(nameof(GetBook), new { id = book.Id }, book);
+                return Ok();
+
+
 
             return NotFound(result);
         }
 
         [HttpPut]
-        public async Task<ActionResult<BookDTO>> PutBook(int id, BookDTO book)
+        public async Task<ActionResult<BookDto>> PutBook(int id, BookDto book)
         {
-            var result = await _bookServices.UpdateAsync(id, book);
+            var result = await _bookService.UpdateAsync(id, book);
             if (result.IsSuccess)
                 return NoContent();
 
@@ -59,25 +63,27 @@ namespace Library.Presentation.Controllers
 
         [HttpDelete("{id}")]
 
-        public async Task<ActionResult<BookDTO>> DeleteBook(int id)
+        public async Task<ActionResult<BookDto>> DeleteBook(int id)
         {
-            await _bookServices.DeleteAsync(id);
+            await _bookService.DeleteAsync(id);
             return NoContent();
         }
 
         [HttpGet("orderByTitle")]
-        public async Task<ActionResult<IEnumerable<BookDTO>>> OrderByTitle()
+        public async Task<ActionResult<IEnumerable<BookDto>>> OrderByTitle()
         {
-            var books = await _bookServices.GetAllOrderByTitle();
+            var books = await _bookService.GetAllOrderByTitle();
             return Ok(books);
         }
 
         [HttpGet("orderByReleaseDate")]
-        public async Task<ActionResult<IEnumerable<BookDTO>>> OrderByReleaseDate()
+        public async Task<ActionResult<IEnumerable<BookDto>>> OrderByReleaseDate()
         {
-            var books = await _bookServices.GetAllOrderByReleaseDate();
+            var books = await _bookService.GetAllOrderByReleaseDate();
             return Ok(books);
         }
+
+        
 
 
 

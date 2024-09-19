@@ -9,48 +9,45 @@ namespace Library.DataAccess.Repositories
 {
     public class BookRepository : IRepositoryBook
     {
-        private readonly BookContext _bookContext;   
+        private readonly LibraryContext _libraryContext;   
 
-        public BookRepository(BookContext bookContext)
+        public BookRepository(LibraryContext libraryContext)
         {
-            this._bookContext = bookContext;
+            this._libraryContext = libraryContext;
         }
 
         public async Task<IEnumerable<Book>> GetAllAsync()
         {
-            return _bookContext.Books;
+            return _libraryContext.Books;
         }
 
         public async Task<Book> GetAsync(int id)
         {
-            return await _bookContext.Books.FindAsync(id);
+            return await _libraryContext.Books.FindAsync(id);
         }
 
         public async Task CreateAsync(Book book)
         {
-            await _bookContext.Books.AddAsync(book);
-            await SaveAsync();
+            await _libraryContext.Books.AddAsync(book);
+            await _libraryContext.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(int id, Book book)
         {
-           _bookContext.Entry(book).State = EntityState.Modified;
-            await SaveAsync();
+            _libraryContext.Entry(book).State = EntityState.Modified;
+            await _libraryContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
-            Book? book = await _bookContext.Books.FindAsync(id);
+            Book? book = await _libraryContext.Books.FindAsync(id);
             if (book != null) 
             {
-                _bookContext.Books.Remove(book);
+                _libraryContext.Books.Remove(book);
             }
-            await SaveAsync();
+            await _libraryContext.SaveChangesAsync();
         }
-        public async Task SaveAsync()
-        {
-            await _bookContext.SaveChangesAsync();
-        }
+
 
     }
 }

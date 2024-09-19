@@ -9,38 +9,34 @@ using Library.Services.Interaces;
 using Library.Domain.Models;
 using Library.DataAccess.Interfaces;
 
+
 namespace Library.Services.Repositories
 {
     public class BookServices : IServiceBook
     {
         private readonly IRepositoryBook _bookRepository;
+        private readonly IMapper<BookDto, Book> _bookMapper;
 
-        public BookServices(IRepositoryBook bookRepository) 
+        public BookServices(IRepositoryBook bookRepository, IMapper<BookDto, Book> bookMapper) 
         { 
             this._bookRepository = bookRepository;
+            this._bookMapper = bookMapper;
         }
 
-        public async Task<IEnumerable<BookDTO>> GetAllAsync()
+        public async Task<IEnumerable<BookDto>> GetAllAsync()
         {
             var books = await _bookRepository.GetAllAsync();
             if (books is null)
             {
-                return Enumerable.Empty<BookDTO>();
+                return Enumerable.Empty<BookDto>();
             }
-
-            var bookDtos = books.Select(book => new BookDTO
-            {
-                Id = book.Id,
-                Title = book.Title,
-                Ganre = book.Ganre,
-                Author = book.Author,
-                ReleasedDate = book.ReleasedDate
-            });
+            
+            var bookDtos = books.Select(x => _bookMapper.ToDtoWithId(x)).ToList();
 
             return bookDtos;
         }
 
-        public async Task<BookDTO> GetAsync(int id)
+        public async Task<BookDto> GetAsync(int id)
         {
             var book = await _bookRepository.GetAsync(id);
 
@@ -49,30 +45,16 @@ namespace Library.Services.Repositories
                 return null;
             }
 
-            var bookDto = new BookDTO
-            {
-                Id = book.Id,
-                Title = book.Title,
-                Ganre = book.Ganre,
-                Author = book.Author,
-                ReleasedDate = book.ReleasedDate
-            };
+            var bookDto = _bookMapper.ToDtoWithId(book);
 
             return bookDto;
         }
 
-        public async Task<ServiceResult> CreateAsync(BookDTO entity)
+        public async Task<ServiceResult> CreateAsync(BookDto bookDto)
         {
             try
             {
-                var book = new Book
-                {
-                    Id = entity.Id,
-                    Title = entity.Title,
-                    Ganre = entity.Ganre,
-                    Author = entity.Author,
-                    ReleasedDate = entity.ReleasedDate
-                };
+                var book = _bookMapper.ToEntity(bookDto);
 
                 await _bookRepository.CreateAsync(book);
 
@@ -80,35 +62,24 @@ namespace Library.Services.Repositories
             }
             catch (Exception)
             {
-                return ServiceResult.Failure("Failed to create book: {ex.Message}");
+                return ServiceResult.Failure("Failed to create book");
             }
 
         }
 
-        public async Task<ServiceResult> UpdateAsync(int id, BookDTO entity)
+        public async Task<ServiceResult> UpdateAsync(int id, BookDto bookDto)
         {
             try
             {
-                if (id != entity.Id)
-                {
-                    return ServiceResult.Failure("Id is incorrect");
-                }
-
-                var book = new Book
-                {
-                    Id = entity.Id,
-                    Title = entity.Title,
-                    Ganre = entity.Ganre,
-                    Author = entity.Author,
-                    ReleasedDate = entity.ReleasedDate
-                };
+                var book = _bookMapper.ToEntity(bookDto);
+                book.Id = id;
 
                 await _bookRepository.UpdateAsync(id, book);
                 return ServiceResult.Success();
             }
             catch (Exception)
             {
-                return ServiceResult.Failure("Failed to update book: {ex.Message}");
+                return ServiceResult.Failure("Failed to update book");
             }
 
         }
@@ -118,7 +89,7 @@ namespace Library.Services.Repositories
             await _bookRepository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<BookDTO>> GetAllOrderByTitle()
+        public async Task<IEnumerable<BookDto>> GetAllOrderByTitle()
         {
 
             var bookDtos = await GetAllAsync();
@@ -126,10 +97,10 @@ namespace Library.Services.Repositories
             return bookDtos;
         }
 
-        public async Task<IEnumerable<BookDTO>> GetAllOrderByReleaseDate()
+        public async Task<IEnumerable<BookDto>> GetAllOrderByReleaseDate()
         {
             var bookDtos = await GetAllAsync();
-            bookDtos = bookDtos.OrderBy(x => x.ReleasedDate);
+            bookDtos = bookDtos.OrderBy(x => x.PublicationDate);
             return bookDtos;
         }
 

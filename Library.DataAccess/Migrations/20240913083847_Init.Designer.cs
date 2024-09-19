@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Library.DataAccess.Migrations
 {
-    [DbContext(typeof(BookContext))]
+    [DbContext(typeof(LibraryContext))]
     [Migration("20240913083847_Init")]
     partial class Init
     {
