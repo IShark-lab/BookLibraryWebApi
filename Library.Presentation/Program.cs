@@ -27,14 +27,20 @@ namespace Library.Presentation
 
             builder.Services.AddDbContext<LibraryContext>(options => options.UseSqlServer(connectionString));
 
+
+
+            builder.Services.AddScoped<IRepositoryBorrower, BorrowerRepostiory>();
+            builder.Services.AddScoped<IServiceBorrower, BorrowerServices>();
+            builder.Services.AddScoped<IMapper<BorrowerDto, Borrower>, BorrowerMapper>();
+
+
             builder.Services.AddScoped<IRepositoryBook, BookRepository>();
-            builder.Services.AddScoped<IRepositoryAuthor, AuthorRepository>();
-
             builder.Services.AddScoped<IServiceBook, BookServices>();
-            builder.Services.AddScoped<IServiceAuthor, AuthorServices>();
-
-
             builder.Services.AddScoped<IMapper<BookDto, Book>, BookMapper>();
+
+
+            builder.Services.AddScoped<IRepositoryAuthor, AuthorRepository>();
+            builder.Services.AddScoped<IServiceAuthor, AuthorServices>();
             builder.Services.AddScoped<IMapper<AuthorDto, Author>, AuthorMapper>();
             
 

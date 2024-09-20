@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Library.Services.Repositories;
 using Library.Domain.Models;
+using Library.Services.Services;
 
 namespace Library.Services.Interaces
 {
@@ -29,5 +30,6 @@ namespace Library.Services.Interaces
     {
         Task<AuthorDto> GetAuthorByBookAsync(int bookId);
     }
+    public interface IServiceBorrower : IServiceRepository<BorrowerDto> { }
 
 }

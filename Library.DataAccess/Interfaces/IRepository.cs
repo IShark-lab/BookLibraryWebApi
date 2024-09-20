@@ -16,5 +16,9 @@ namespace Library.DataAccess.Interfaces
     {
         Task<Author> GetAuthorByBook(int bookId);
     }
-    
+    public interface IRepositoryBorrower : IRepository<Borrower> 
+    { 
+        
+    }
+
 }
