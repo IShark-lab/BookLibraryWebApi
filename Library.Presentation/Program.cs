@@ -44,6 +44,11 @@ namespace Library.Presentation
             builder.Services.AddScoped<IMapper<AuthorDto, Author>, AuthorMapper>();
             
 
+            builder.Services.AddScoped<IRepositoryLoan, LoanRepository>();
+            builder.Services.AddScoped<IServiceLoan, LoanServices>();
+            builder.Services.AddScoped<IMapper<LoanDto, Loan>, LoanMapper>();
+
+
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

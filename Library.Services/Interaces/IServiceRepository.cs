@@ -31,5 +31,6 @@ namespace Library.Services.Interaces
         Task<AuthorDto> GetAuthorByBookAsync(int bookId);
     }
     public interface IServiceBorrower : IServiceRepository<BorrowerDto> { }
+    public interface IServiceLoan : IServiceRepository<LoanDto> { }
 
 }

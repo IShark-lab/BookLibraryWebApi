@@ -20,5 +20,9 @@ namespace Library.DataAccess.Interfaces
     { 
         
     }
+    public interface IRepositoryLoan : IRepository<Loan> 
+    {
+        
+    }
 
 }
