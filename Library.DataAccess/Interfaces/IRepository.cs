@@ -11,7 +11,11 @@ namespace Library.DataAccess.Interfaces
         Task DeleteAsync(int id);
     }
 
-    public interface IRepositoryBook : IRepository<Book> { }
+    public interface IRepositoryBook : IRepository<Book> 
+    {
+        Task<IEnumerable<Book>> GetBooksByAuthorId(int authorId);
+        Task<IEnumerable<Book>> GetAllAsync(int page, int pageSize);
+    }
     public interface IRepositoryAuthor : IRepository<Author> 
     {
         Task<Author> GetAuthorByBook(int bookId);
@@ -22,7 +26,7 @@ namespace Library.DataAccess.Interfaces
     }
     public interface IRepositoryLoan : IRepository<Loan> 
     {
-        
+        Task<IEnumerable<Book>> GetBooksByBorrowerId(int borrowerId);
     }
 
 }

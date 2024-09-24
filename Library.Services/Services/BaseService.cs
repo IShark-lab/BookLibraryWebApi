@@ -44,7 +44,7 @@ namespace Library.Services.Services
             await _repository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<TDto>> GetAllAsync()
+        public virtual async Task<IEnumerable<TDto>> GetAllAsync()
         {
             var authors = await _repository.GetAllAsync();
 

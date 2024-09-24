@@ -12,7 +12,23 @@ namespace Library.Services.Services
 {
     public class LoanServices : BaseService<LoanDto, Loan>, IServiceLoan
     {
-        public LoanServices(IRepositoryLoan repository, IMapper<LoanDto, Loan> mapper) : base(repository, mapper) { }
+        private readonly IRepositoryLoan _repositoryLoan;
+        private readonly IMapper<BookDto, Book> _bookMapper;
+        public LoanServices(IRepositoryLoan repository, IMapper<LoanDto, Loan> mapper, IMapper<BookDto, Book> bookMapper) : base(repository, mapper)
+        {
+            this._repositoryLoan = repository;
+            this._bookMapper = bookMapper;
+        }
 
+
+        public async Task<IEnumerable<BookDto>> GetBooksByBorrowerId(int borrowerId)
+        {
+            var books = await _repositoryLoan.GetBooksByBorrowerId(borrowerId);
+            if (books == Enumerable.Empty<Book>())
+                return null;
+
+            var booksDto = books.Select(x => _bookMapper.ToDtoWithId(x));
+            return booksDto;
+        }
     }
 }

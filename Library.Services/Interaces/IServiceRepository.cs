@@ -1,12 +1,6 @@
-﻿using Library.DataAccess.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Library.Services.Repositories;
+﻿using Library.Services.Repositories;
 using Library.Domain.Models;
-using Library.Services.Services;
+
 
 namespace Library.Services.Interaces
 {
@@ -25,12 +19,20 @@ namespace Library.Services.Interaces
         Task<IEnumerable<T>> GetAllOrderByReleaseDate();
         
     }
-    public interface IServiceBook : IServiceRepository<BookDto>, IServiceOrder<BookDto> { }
+    public interface IServiceBook : IServiceRepository<BookDto>, IServiceOrder<BookDto> 
+    { 
+        Task<IEnumerable<BookDto>> GetBooksByAuthorId(int authorId);
+        Task<IEnumerable<BookDto>> GetAllAsync(string order);
+        Task<IEnumerable<BookDto>> GetAllAsync(string order,int page, int pageSize);
+    }
     public interface IServiceAuthor : IServiceRepository<AuthorDto> 
     {
         Task<AuthorDto> GetAuthorByBookAsync(int bookId);
     }
     public interface IServiceBorrower : IServiceRepository<BorrowerDto> { }
-    public interface IServiceLoan : IServiceRepository<LoanDto> { }
+    public interface IServiceLoan : IServiceRepository<LoanDto> 
+    {
+        Task<IEnumerable<BookDto>> GetBooksByBorrowerId(int borrowerId);
+    }
 
 }

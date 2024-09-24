@@ -21,14 +21,16 @@ namespace Library.Presentation.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BookDto>>> GetBooks()
+        public async Task<ActionResult<IEnumerable<BookDto>>> GetBooks(string sortOrder = "title", int page = 1, int pageSize = 5)
         {
-            var book = await _bookService.GetAllAsync();
+            var book = await _bookService.GetAllAsync(sortOrder, page, pageSize);
             if (book is null)
                 return NotFound();
 
             return Ok(book);
         }
+
+
         [HttpGet("{id}")]
         public async Task<ActionResult<BookDto>> GetBook(int id)
         {
@@ -36,10 +38,12 @@ namespace Library.Presentation.Controllers
             if (book is null) return NotFound();
             return Ok(book);
         }
+
+
         [HttpPost]
         public async Task<ActionResult<BookDto>> PostBook(BookDto book)
         {
-            
+
             var result = await _bookService.CreateAsync(book);
 
             if (result.IsSuccess)
@@ -69,21 +73,18 @@ namespace Library.Presentation.Controllers
             return NoContent();
         }
 
-        [HttpGet("orderByTitle")]
-        public async Task<ActionResult<IEnumerable<BookDto>>> OrderByTitle()
+
+        [HttpGet("author/{authorId}")]
+        public async Task<ActionResult<IEnumerable<BookDto>>> GetBooksByAuthor(int authorId)
         {
-            var books = await _bookService.GetAllOrderByTitle();
+            var books = await _bookService.GetBooksByAuthorId(authorId);
+            if (books is null)
+                return NotFound();
+
             return Ok(books);
         }
 
-        [HttpGet("orderByReleaseDate")]
-        public async Task<ActionResult<IEnumerable<BookDto>>> OrderByReleaseDate()
-        {
-            var books = await _bookService.GetAllOrderByReleaseDate();
-            return Ok(books);
-        }
 
-        
 
 
 

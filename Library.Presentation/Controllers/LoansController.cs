@@ -67,5 +67,15 @@ namespace Library.Presentation.Controllers
             return NoContent();
         }
 
+
+        [HttpGet("books/{borrowerId}")]
+        public async Task<ActionResult<IEnumerable<BookDto>>> GetBooksByBorrowerId(int borrowerId)
+        {
+            var books = await _serviceLoan.GetBooksByBorrowerId(borrowerId);
+            if(books == null) 
+                return NotFound();
+
+            return Ok(books);
+        }
     }
 }
